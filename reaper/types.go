@@ -6,15 +6,24 @@ import (
 	"strings"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
 )
 
 var ErrNotAVAlidTarget = errors.New("not a valid target")
 
 var _ flag.Value = (*Target)(nil)
 
+func ParseTarget(val string) (Target, error) {
+	t := Target(val)
+	if _, err := t.Selector(); err != nil {
+		return "", err
+	}
+	return t, nil
+}
+
 type Target string
 
-func (t Target) Selector() (*metav1.LabelSelector, error) {
+func (t Target) Selector() (labels.Selector, error) {
 	s := string(t)
 	if s == "" {
 		return nil, ErrNotAVAlidTarget
@@ -25,11 +34,13 @@ func (t Target) Selector() (*metav1.LabelSelector, error) {
 		return nil, ErrNotAVAlidTarget
 	}
 
-	return &metav1.LabelSelector{
+	sel := &metav1.LabelSelector{
 		MatchLabels: map[string]string{
 			key: val,
 		},
-	}, nil
+	}
+
+	return metav1.LabelSelectorAsSelector(sel)
 }
 
 func (t Target) String() string {

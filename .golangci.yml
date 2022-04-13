@@ -1,0 +1,147 @@
+linters-settings:
+  dupl:
+    threshold: 100
+  funlen:
+    lines: 100
+    statements: 50
+  gci:
+    local-prefixes: github.com/baez90/kreaper
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - opinionated
+      - performance
+    disabled-checks:
+      - ifElseChain
+      - octalLiteral
+      - wrapperFunc
+      # see https://github.com/golangci/golangci-lint/issues/2649
+      - hugeParam
+      - rangeValCopy
+    # settings:
+    #   hugeParam:
+    #     sizeThreshold: 200
+
+  gocyclo:
+    min-complexity: 15
+  goimports:
+    local-prefixes: github.com/baez90/kreaper
+  golint:
+    min-confidence: 0
+  gomnd:
+    settings:
+      mnd:
+        # don't include the "operation" and "assign"
+        checks:
+          - argument
+          - case
+          - condition
+          - return
+  gomoddirectives:
+    replace-allow-list:
+      # pin versions
+      - k8s.io/api
+      - k8s.io/apiextensions-apiserver
+      - k8s.io/apimachinery
+      - k8s.io/client-go
+      - k8s.io/component-base
+  govet:
+    check-shadowing: true
+    enable-all: true
+    disable:
+      - fieldalignment
+      # see https://github.com/golangci/golangci-lint/issues/2649
+      - nilness
+      - unusedwrite
+  importas:
+    no-unaliased: true
+    alias:
+      - pkg: (k8s.io/api|k8s.io/apimachinery/pkg/apis)/([A-z0-9]+)/([A-z0-9]+)
+        alias: $2$3
+  lll:
+    line-length: 140
+  misspell:
+    locale: US
+  nolintlint:
+    allow-leading-space: true # don't require machine-readable nolint directives (i.e. with no leading space)
+    allow-unused: false # report any unused nolint directives
+    require-explanation: false # don't require an explanation for nolint directives
+    require-specific: true
+
+linters:
+  disable-all: true
+  enable:
+    - contextcheck
+    - deadcode
+    - dogsled
+    - dupl
+    - errcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - exhaustive
+    - exportloopref
+    - funlen
+    - gocognit
+    - goconst
+    # - gocritic
+    - gocyclo
+    - godox
+    - gofumpt
+    - goimports
+    - gomoddirectives
+    - gomnd
+    - gosec
+    - gosimple
+    - govet
+    - ifshort
+    - importas
+    - ineffassign
+    # - ireturn - enable later
+    - lll
+    - misspell
+    - nakedret
+    - nestif
+    - nilnil
+    - noctx
+    - nolintlint
+    - paralleltest
+    - prealloc
+    - predeclared
+    - promlinter
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - tenv
+    - testpackage
+    - thelper
+    - typecheck
+    - unconvert
+    - unparam
+    - varcheck
+    - whitespace
+    # - unused
+    - wastedassign
+
+issues:
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - dupl
+        - funlen
+        - gocognit
+        - gomnd
+        - govet
+    - path: magefiles/
+      linters:
+        - deadcode
+
+run:
+  skip-files:
+    - ".*.mock.\\.go$"
+  modules-download-mode: readonly
+  timeout: 5m
