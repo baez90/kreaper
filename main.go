@@ -27,7 +27,7 @@ var (
 	dryRun     bool
 	logLevel   *zapcore.Level
 	kreaper    = reaper.Kreaper{
-		Target: lookupEnvOr[reaper.Target]("KREAPER_TARGET", "", reaper.ParseTarget),
+		Target: lookupEnvOr("KREAPER_TARGET", "", reaper.ParseTarget),
 	}
 )
 
@@ -97,9 +97,9 @@ func prepareFlags() {
 	)
 
 	if home := homedir.HomeDir(); home != "" {
-		flag.StringVar(&kubeconfig, "kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+		flag.StringVar(&kubeconfig, "kubeconfig", lookupEnvOr("KUBECONFIG", filepath.Join(home, ".kube", "config"), identity[string]), "(optional) absolute path to the kubeconfig file")
 	} else {
-		flag.StringVar(&kubeconfig, "kubeconfig", "", "absolute path to the kubeconfig file")
+		flag.StringVar(&kubeconfig, "kubeconfig", lookupEnvOr("KUBECONFIG", "", identity[string]), "absolute path to the kubeconfig file")
 	}
 
 	flag.Parse()

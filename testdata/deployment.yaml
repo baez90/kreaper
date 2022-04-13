@@ -9,7 +9,6 @@ metadata:
   name: kreaper-debug
 rules:
   - verbs:
-      - get
       - list
       - watch
       - deletecollection
