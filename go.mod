@@ -3,6 +3,7 @@ module github.com/baez90/kreaper
 go 1.18
 
 require (
+	github.com/maxatome/go-testdeep v1.11.0
 	go.uber.org/zap v1.21.0
 	k8s.io/api v0.23.5
 	k8s.io/apimachinery v0.23.5

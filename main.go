@@ -96,11 +96,17 @@ func prepareFlags() {
 		"Set target namespace in which kreaper will look for pods - env variable: KREAPER_TARGET_NAMESPACE",
 	)
 
+	var kubeconfigFallback string
 	if home := homedir.HomeDir(); home != "" {
-		flag.StringVar(&kubeconfig, "kubeconfig", lookupEnvOr("KUBECONFIG", filepath.Join(home, ".kube", "config"), identity[string]), "(optional) absolute path to the kubeconfig file")
-	} else {
-		flag.StringVar(&kubeconfig, "kubeconfig", lookupEnvOr("KUBECONFIG", "", identity[string]), "absolute path to the kubeconfig file")
+		kubeconfigFallback = filepath.Join(home, ".kube", "config")
 	}
+
+	flag.StringVar(
+		&kubeconfig,
+		"kubeconfig",
+		lookupEnvOr("KUBECONFIG", kubeconfigFallback, identity[string]),
+		"absolute path to the kubeconfig file",
+	)
 
 	flag.Parse()
 }

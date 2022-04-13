@@ -27,6 +27,15 @@ jobs:
         with:
           lfs: true
 
+      - name: Install gotestsum
+        run: go install gotest.tools/gotestsum@latest
+
+      - name: Create out directory
+        run: mkdir -p ./out
+
+      - name: Run tests
+        run: gotestsum -- -coverprofile=out/cover.txt -shuffle=on -race -covermode=atomic ./...
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
