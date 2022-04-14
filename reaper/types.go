@@ -48,6 +48,11 @@ func (t Target) String() string {
 }
 
 func (t *Target) Set(s string) error {
+	tmp := Target(s)
+	if _, err := tmp.Selector(); err != nil {
+		return err
+	}
+
 	val := (*string)(t)
 	*val = s
 	return nil
