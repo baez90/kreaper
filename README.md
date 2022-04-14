@@ -1,5 +1,9 @@
 # kreaper - *K*ubernetes _Reaper_
 
+[![Go](https://github.com/baez90/kreaper/actions/workflows/go.yml/badge.svg)](https://github.com/baez90/kreaper/actions/workflows/go.yml)
+[![codecov](https://codecov.io/gh/baez90/kreaper/branch/main/graph/badge.svg?token=HRLEI8TS50)](https://codecov.io/gh/baez90/kreaper)
+[![Go Report Card](https://goreportcard.com/badge/github.com/baez90/kreaper)](https://goreportcard.com/report/github.com/baez90/kreaper)
+
 _kreaper_ is (yet another) *K*ubernetes pod _reaper_.
 It's main purpose is to delete pods matching a certain pod selector after a deadline is reached.
 
