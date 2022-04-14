@@ -36,6 +36,12 @@ jobs:
       - name: Run tests
         run: gotestsum -- -coverprofile=out/cover.txt -shuffle=on -race -covermode=atomic ./...
 
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v2
+        with:
+          files: out/cover.txt
+          name: kreaper
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
