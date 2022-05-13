@@ -37,9 +37,30 @@ changelog:
 dockers:
   - ids:
       - kreaper
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/amd64"
     image_templates:
-      - ghcr.io/baez90/kreaper:latest
-      - ghcr.io/baez90/kreaper:{{ .Tag }}
-      - ghcr.io/baez90/kreaper:{{ .Major }}
-      - ghcr.io/baez90/kreaper:{{ .ShortCommit}}
+      - ghcr.io/baez90/kreaper:{{ .Version }}-amd64
+      - ghcr.io/baez90/kreaper:{{ .Major }}-amd64
     dockerfile: deployments/Dockerfile
+  - ids:
+      - kreaper
+    use: buildx
+    goarch: arm64
+    build_flag_templates:
+      - "--platform=linux/arm64/v8"
+    image_templates:
+      - ghcr.io/baez90/kreaper:{{ .Version }}-arm64v8
+      - ghcr.io/baez90/kreaper:{{ .Major }}-arm64v8
+    dockerfile: deployments/Dockerfile
+
+docker_manifests:
+  - name_template: ghcr.io/baez90/kreaper:{{ .Version }}
+    image_templates:
+      - ghcr.io/baez90/kreaper:{{ .Version }}-amd64
+      - ghcr.io/baez90/kreaper:{{ .Version }}-arm64v8
+  - name_template: ghcr.io/baez90/kreaper:{{ .Major }}
+    image_templates:
+      - ghcr.io/baez90/kreaper:{{ .Major }}-amd64
+      - ghcr.io/baez90/kreaper:{{ .Major }}-arm64v8
