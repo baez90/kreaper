@@ -61,6 +61,8 @@ linters-settings:
     alias:
       - pkg: (k8s.io/api|k8s.io/apimachinery/pkg/apis)/([A-z0-9]+)/([A-z0-9]+)
         alias: $2$3
+  staticcheck:
+    go: "1.18"
   lll:
     line-length: 140
   misspell:
