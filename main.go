@@ -119,6 +119,8 @@ func loadRestConfig() (cfg *rest.Config, err error) {
 	return clientcmd.BuildConfigFromFlags("", kubeconfig)
 }
 
+//nolint:nolintlint // false postivie
+//nolint:ireturn // false positive
 func lookupEnvOr[T any](envKey string, fallback T, parse func(envVal string) (T, error)) T {
 	envVal := os.Getenv(envKey)
 	if envVal == "" {
@@ -132,6 +134,8 @@ func lookupEnvOr[T any](envKey string, fallback T, parse func(envVal string) (T,
 	}
 }
 
+//nolint:nolintlint // false postivie
+//nolint:ireturn // false positive
 func identity[T any](in T) (T, error) {
 	return in, nil
 }

@@ -23,6 +23,8 @@ func ParseTarget(val string) (Target, error) {
 
 type Target string
 
+//nolint:nolintlint // false postivie
+//nolint:ireturn // no over option due to upstream library
 func (t Target) Selector() (labels.Selector, error) {
 	s := string(t)
 	if s == "" {
